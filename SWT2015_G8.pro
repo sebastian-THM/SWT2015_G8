@@ -12,9 +12,11 @@ TARGET = SWT2015_G8
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        view_qt.cpp
+SOURCES +=  main.cpp\
+            view_qt.cpp \
+            state_base.cpp
 
-HEADERS  += view_qt.h
+HEADERS  += view_qt.h \
+            state_base.h
 
 FORMS    += view_qt.ui
