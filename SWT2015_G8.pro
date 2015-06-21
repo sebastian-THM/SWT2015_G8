@@ -14,9 +14,19 @@ TEMPLATE = app
 
 SOURCES +=  main.cpp\
             view_qt.cpp \
-            state_base.cpp
+            controller.cpp \
+            states/state_base.cpp \
+            states/state_cut.cpp \
+            states/state_move.cpp \
+            states/state_off.cpp \
+            states/state_on.cpp
 
 HEADERS  += view_qt.h \
-            state_base.h
+            controller.h \
+            states/state_base.h \
+            states/state_cut.h \
+            states/state_move.h \
+            states/state_off.h \
+            states/state_on.h
 
 FORMS    += view_qt.ui
