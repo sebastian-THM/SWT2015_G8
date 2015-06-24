@@ -2,37 +2,45 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <string>
 #include "states/state_base.h"
-#include "states/state_cut.h"
-#include "states/state_move.h"
-#include "states/state_off.h"
-#include "states/state_on.h"
-
 
 class Controller : public QObject
 {
     Q_OBJECT
 public:
     explicit Controller(QObject *parent = 0);
+    class State_Base *Current_State;
 
 signals:
     //Sigals to GUI
-    void Laser_Move(int x, int y);
-    void Laser_An();
-    void Laser_Aus();
+    void LaserMove(int x, int y);
+    void LaserCut(int x, int y);
+    void LaserOn();
+    void LaserOff();
+    void Error(std::string ErrorMessage);
+    //Signals to Model
+    void GetNextOpcode();
+    void OpenFile(std::string Filename);
 
 
 public slots:
     //Input Slots from DispatchTable
-    void In_Move(char * Coords);
-    void In_Laser(char * State);
+    void inMove(std::string Coords);
+    void inLaser(std::string State);
+    //Input from View
+    void inMoveDone();
+    void inNewFileName(std::string Filename);
+    void inResetGUI();
+    void inGUIReady();
+    //Input from Model
+    void inNewFileOpend();
 
 private:
-    State_Base *Current_State;
-    State_Cut *Cut_State;
-    State_Move *Move_State;
-    State_Off *Off_State;
-    State_On *On_State;
+
+private slots:
+
+
 };
 
 #endif // CONTROLLER_H
