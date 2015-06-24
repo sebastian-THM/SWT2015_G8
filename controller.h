@@ -11,6 +11,9 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
     class State_Base *Current_State;
+    //Input from DispatchTable
+    void inMove(std::string Coords);
+    void inLaser(std::string State);
 
 signals:
     //Sigals to GUI
@@ -25,9 +28,6 @@ signals:
 
 
 public slots:
-    //Input Slots from DispatchTable
-    void inMove(std::string Coords);
-    void inLaser(std::string State);
     //Input from View
     void inMoveDone();
     void inNewFileName(std::string Filename);
