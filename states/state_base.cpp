@@ -1,21 +1,28 @@
 #include "state_base.h"
+#include "controller.h"
 
-State_Base::State_Base(QObject *parent) : QObject(parent)
+State_Base::State_Base(class Controller *pController) : QObject((QObject*)pController)
 {
+    StateController = pController;
 }
 
-void move(int x, int y)
+void State_Base::Move(int x, int y)
 {
+    printf("State_Base:move(%d,%d)",x,y);
 }
 
-void on()
+void State_Base::On()
 {
+    printf("State_Base:on()");
 }
 
-void off()
+void State_Base::Off()
 {
+    printf("State_Base:off()");
 }
 
-void position_reached()
+void State_Base::MoveDone()
 {
+
+    printf("State_Base:position_reached()");
 }

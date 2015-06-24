@@ -7,7 +7,8 @@
 class State_Move : public State_Base
 {
 public:
-    explicit State_Move();
+    State_Move(Controller *pController, int x, int y);
+    void MoveDone();
 };
 
 #endif // STATE_MOVE_H

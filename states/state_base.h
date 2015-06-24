@@ -2,16 +2,18 @@
 #define STATE_BASE_H
 
 #include <QObject>
+#include "controller.h"
 
 class State_Base : public QObject
 {
     Q_OBJECT
 public:
-    explicit State_Base(QObject *parent=0);
-    void move(int x, int y);
-    void on();
-    void off();
-    void position_reached();
+    State_Base(class Controller *pController);
+    class Controller *StateController;
+    virtual void Move(int x, int y);
+    virtual void On();
+    virtual void Off();
+    virtual void MoveDone();
 
 
 signals:

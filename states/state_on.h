@@ -7,7 +7,9 @@
 class State_On : public State_Base
 {
 public:
-    explicit State_On();
+    State_On(Controller *pController);
+    void Move(int x, int y);
+    void Off();
 };
 
 #endif // STATE_ON_H

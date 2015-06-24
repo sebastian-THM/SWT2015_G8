@@ -7,7 +7,8 @@
 class State_Cut : public State_Base
 {
 public:
-    explicit State_Cut();
+    State_Cut(Controller *pController, int x, int y);
+    void MoveDone();
 };
 
 #endif // STATE_CUT_H
