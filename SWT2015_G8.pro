@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        view_qt.cpp
+        view_qt.cpp \
+    cutting_area.cpp
 
-HEADERS  += view_qt.h
+HEADERS  += view_qt.h \
+    cutting_area.h
 
 FORMS    += view_qt.ui
