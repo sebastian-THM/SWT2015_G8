@@ -20,7 +20,7 @@ SOURCES +=  main.cpp\
             states/state_move.cpp \
             states/state_off.cpp \
             states/state_on.cpp \
-    dispatchtable.cpp
+            dispatchtable.cpp
 
 HEADERS  += view_qt.h \
             controller.h \
@@ -29,6 +29,6 @@ HEADERS  += view_qt.h \
             states/state_move.h \
             states/state_off.h \
             states/state_on.h \
-    dispatchtable.h
+            dispatchtable.h
 
 FORMS    += view_qt.ui

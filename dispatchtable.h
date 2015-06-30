@@ -1,27 +1,32 @@
 #ifndef DISPATCHTABLE_H
 #define DISPATCHTABLE_H
 
-#include <string>
-#include <QList>
+#include <QObject>
 
-struct DispatchElement
+struct sDispatchElement
 {
     std::string FunctionName;
-    void *Function(std::string);
+    void (*Function)(std::string);
 };
 
+typedef struct sDispatchElement DispatchElement ;
 
-class DispatchTable
+
+class DispatchTable : public QObject
 {
+    Q_OBJECT
 public:
-    DispatchTable();
-    void AddFunction(std::string FunctionName, void *Function(std::string));
+    explicit DispatchTable(QObject *parent = 0);
+    void AddFunction(std::string FunctionName, void (*Function)(std::string));
+
+
+signals:
 
 public slots:
     void Dispatch(std::string Function, std::string Parameter);
 
 private:
-    QList<DispatchElement> *DispatchList;
+    QList<DispatchElement> DispatchList;
 };
 
 #endif // DISPATCHTABLE_H

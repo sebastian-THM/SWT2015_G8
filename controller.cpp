@@ -39,19 +39,19 @@ void Controller::inMoveDone()
     Current_State->MoveDone();
 }
 
-void Controller::NewFileName(std::string Filename)
+void Controller::inNewFileName(std::string Filename)
 {
     //Send the Signal to the Model
     emit OpenFile(Filename);
 }
 
-void inGUIReady()
+void Controller::inGUIReady()
 {
 }
 
 //Input from Model
 
-void inNewFileOpend()
+void Controller::inNewFileOpend()
 {
     //A new File was loaded, reset GUI and State
     emit ResetGUI();

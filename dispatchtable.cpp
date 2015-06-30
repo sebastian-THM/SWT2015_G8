@@ -1,9 +1,7 @@
 #include "dispatchtable.h"
-#include "controller.h"
 
-DispatchTable::DispatchTable()
+DispatchTable::DispatchTable(QObject *parent) : QObject(parent)
 {
-    DispatchList = new QList<DispatchElement>;
 }
 
 void DispatchTable::Dispatch(std::string Function, std::string Parameter)
@@ -18,11 +16,12 @@ void DispatchTable::Dispatch(std::string Function, std::string Parameter)
     }
 }
 
-void DispatchTable::AddFunction(std::string FunctionName, void *Function(std::string))
+void DispatchTable::AddFunction(std::string FunctionName, void (*Function)(std::string))
 {
     DispatchElement E;
     E.FunctionName = FunctionName;
     E.Function = Function;
-    DispatchList->append(E);
+    DispatchList.append(E);
 }
+
 

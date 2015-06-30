@@ -21,6 +21,7 @@ signals:
     void LaserCut(int x, int y);
     void LaserOn();
     void LaserOff();
+    void ResetGUI();
     void Error(std::string ErrorMessage);
     //Signals to Model
     void GetNextOpcode();
@@ -31,7 +32,6 @@ public slots:
     //Input from View
     void inMoveDone();
     void inNewFileName(std::string Filename);
-    void inResetGUI();
     void inGUIReady();
     //Input from Model
     void inNewFileOpend();
