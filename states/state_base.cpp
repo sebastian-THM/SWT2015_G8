@@ -4,6 +4,7 @@
 State_Base::State_Base(class Controller *pController) : QObject((QObject*)pController)
 {
     StateController = pController;
+    connect(this,SIGNAL(destroyed(QObject*)),StateController,SLOT(inStateHasChanged()));
 }
 
 void State_Base::Move(int x, int y)

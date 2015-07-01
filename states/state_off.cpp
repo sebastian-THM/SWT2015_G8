@@ -4,7 +4,7 @@
 
 State_Off::State_Off(Controller *pController) : State_Base(pController)
 {
-    StateController->LaserOff();
+    emit StateController->LaserOff();
 }
 
 void State_Off::Move(int x, int y)

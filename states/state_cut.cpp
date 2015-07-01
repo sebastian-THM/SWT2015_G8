@@ -3,7 +3,7 @@
 
 State_Cut::State_Cut(Controller *pController, int x, int y) : State_Base(pController)
 {
-    pController -> LaserCut(x,y);
+    emit pController -> LaserCut(x,y);
 }
 
 void State_Cut::MoveDone()

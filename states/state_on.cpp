@@ -4,7 +4,7 @@
 
 State_On::State_On(Controller *pController) : State_Base(pController)
 {
-    StateController->LaserOn();
+    emit StateController->LaserOn();
 }
 
 void State_On::Move(int x, int y)
