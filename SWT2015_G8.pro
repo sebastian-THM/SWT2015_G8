@@ -14,9 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         view_qt.cpp \
-    cutting_area.cpp
+    cutting_area.cpp \
+    renderarea.cpp \
+    parser.cpp
 
 HEADERS  += view_qt.h \
-    cutting_area.h
+    cutting_area.h \
+    renderarea.h \
+    parser.h
 
 FORMS    += view_qt.ui
+
+#
+# Use the ISO C++ 2011 standard
+#
+CONFIG += c++11
