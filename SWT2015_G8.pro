@@ -14,12 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         view_qt.cpp \
-    cutting_area.cpp \
     renderarea.cpp \
     parser.cpp
 
 HEADERS  += view_qt.h \
-    cutting_area.h \
     renderarea.h \
     parser.h
 
