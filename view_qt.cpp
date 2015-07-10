@@ -16,11 +16,10 @@ View_QT::~View_QT()
 
 void View_QT::on_pushButton_clicked()
 {
-    Parser *pParser = new Parser();
-    ui->widget->Cut(ui->spinBox->value(),ui->spinBox_2->value());
+
 }
 
 void View_QT::on_pushButton_2_clicked()
 {
-    ui->widget->Move(ui->spinBox->value(),ui->spinBox_2->value());
+
 }
