@@ -6,39 +6,43 @@
 #include "states/state_base.h"
 #include <QTimer>
 
+//Controller
+//Steuert den Laser
+
 class Controller : public QObject
 {
     Q_OBJECT
 public:
     explicit Controller(QObject *parent = 0);
     class State_Base *Current_State;
-    //Input from DispatchTable
+    //Eingänge für Aufrufe aus der Dispatch Table
     void inMove(std::string Coords);
     void inLaser(std::string State);
 
 signals:
-    //Sigals to GUI
+    //Signalausgänge zur GUI
     void LaserMove(int x, int y);
     void LaserCut(int x, int y);
     void LaserOn();
     void LaserOff();
     void ResetGUI();
     void Error(std::string ErrorMessage);
-    //Signals to Model
+    //Signalausgänge zum Parser(Model)
     void GetNextOpcode();
     void OpenFile(std::string Filename);
 
 
 public slots:
     void onTimer();
-    //Input from View
+    //Signaleingänge vom der GUI
     void inMoveDone();
     void inNewFileName(std::string Filename);
     void inStart();
     void inPause();
-    //Input from Model
+    //Signaleingänge vom Parser
     void inNewFileOpend();
-    //Input from States
+    void inFileInvalid();
+    //Signaleingang von den States
     void inStateHasChanged();
 
 

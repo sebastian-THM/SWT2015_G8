@@ -21,32 +21,37 @@ void Controller::onTimer()
     }
 }
 
-//Input Slots from DispatchTable
+//Signaleingänge von DispatchTable
 void Controller::inMove(std::string Coords)
 {
     std::string a;
     std::string b;
+    int x,y;
     int commapos;
+    //Leerzeichen löschen
+    Coords.erase(std::remove_if(Coords.begin(), Coords.end(), ::isspace), Coords.end());
 
-    //Remove Spaces
-    std::remove(Coords.begin(),Coords.end(),' ');
-    //Remove Tabs
-    std::remove(Coords.begin(),Coords.end(),'\t');
-
+    //Kommaposition feststellen
     commapos = Coords.find_first_of(',');
 
+    //Zahl vor und nach dem Komma Trennen
     a = Coords.substr(0,commapos);
-    b = Coords.substr(commapos);
+    b = Coords.substr(commapos+1);
 
-    Current_State->Move(atoi(a.c_str()),atoi(b.c_str()));
+    //In Zahl umwandeln
+    x = atoi(a.c_str());
+    y = atoi(b.c_str());
+
+    //StateMachine aufrufen
+    Current_State->Move(x,y);
 }
 
 void Controller::inLaser(std::string State)
 {
-    //Remove Spaces
-    std::remove(State.begin(),State.end(),' ');
-    //Remove Tabs
-    std::remove(State.begin(),State.end(),'\t');
+    //Leerzeichen entfernen
+    State.erase(remove_if(State.begin(), State.end(), ::isspace), State.end());
+
+    //Statuscode vergleichen
     if(State.compare("ON") == 0)
     {
         Current_State->On();
@@ -55,18 +60,17 @@ void Controller::inLaser(std::string State)
     {
         Current_State->Off();
     }
-    else
-    {
-        emit Error("Invalid Statecode for LASER :" + State);
-    }
 }
 
+
+//Wird aufgerufen wenn ein Zustandswechsel in den zustand ON oder OFF stattgefunden hat
 void Controller::inStateHasChanged()
 {
     ReadyForNextOpcode = true;
 }
 
-//Input from View
+
+//Signaleingänge von GUI
 void Controller::inMoveDone()
 {
     Current_State->MoveDone();
@@ -74,22 +78,24 @@ void Controller::inMoveDone()
 
 void Controller::inNewFileName(std::string Filename)
 {
-    //Send the Signal to the Model
+    //Dateiname an Model weitergeben
     emit OpenFile(Filename);
 }
 
+//Aktivieren
 void Controller::inStart()
 {
     IsActive = true;
 }
 
+//Deaktivieren
 void Controller::inPause()
 {
     IsActive = false;
 }
 
-//Input from Model
-
+//Signaleingang vom Parser
+//Datei ist Fehlerfrei und wurde Eingelesen
 void Controller::inNewFileOpend()
 {
     //A new File was loaded, reset GUI and State
@@ -98,4 +104,10 @@ void Controller::inNewFileOpend()
     Current_State = new State_Off(this);
     ReadyForNextOpcode = true;
     IsActive = false;
+}
+
+//Dateiname oder Dateiinhalt ist Fehlerhaft
+void Controller::inFileInvalid()
+{
+    emit Error("Kann Datei nicht öffnen oder Datei ungültig.");
 }

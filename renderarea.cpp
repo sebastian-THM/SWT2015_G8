@@ -6,7 +6,11 @@ RenderArea::RenderArea(QWidget *parent): QWidget(parent)
     connect(Timer, SIGNAL(timeout()),this, SLOT(UpdateLine()));
     Timer->start(10);
     Drawline = NULL;
+    LastPoint.setX(0);
+    LastPoint.setY(0);
+    Instance = this;
 }
+
 void RenderArea::UpdateLine()
 {
     double perc,dist;
@@ -18,11 +22,12 @@ void RenderArea::UpdateLine()
         perc = distdone/dist;
         if (perc > 1)
         {
+            LaserPos = CurrentLine->p2();
             LineList.append(CurrentLine);
             CurrentLine = NULL;
             delete Drawline;
             Drawline = NULL;
-            DrawingDone();
+            emit DrawingDone();
         }
         else
         {
@@ -45,9 +50,10 @@ void RenderArea::UpdateLine()
             perc = distdone/dist;
             if (perc > 1)
             {
+
                 delete MovePath;
                 MovePath = NULL;
-                DrawingDone();
+                emit DrawingDone();
             }
             else
             {
@@ -120,5 +126,7 @@ void RenderArea::Reset()
     LineList.clear();
     LaserPos.setX(0);
     LaserPos.setY(0);
+    LastPoint.setX(0);
+    LastPoint.setY(0);
     Timer->start(10);
 }

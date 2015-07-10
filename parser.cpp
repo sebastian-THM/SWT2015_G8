@@ -39,9 +39,16 @@ void Parser::OpenFile(std::string Filename)
 
     while((X=File.readLine(text,200)) != -1)
     {
-        text[X-1] = '\0';
+        if(text[X-1] == '\n')
+        {
+            text[X-1] = '\0';
+        }
+        if( text[X-2] == '\r')
+        {
+            text[X-2] = '\0';
+        }
         s = std::string(text);
-        if(std::regex_match(s,std::regex("^##[a-zA-Z ]*$|^MOVE [0-9]+, *[0-9]+ *$|^LASER (ON|OFF) *$|^ *$")))
+        if(std::regex_match(s,std::regex("^#+.*$|^MOVE [0-9]+, *[0-9]+ *$|^LASER (ON|OFF) *$|^ *$")))
         {
             memset(text,'\0',201);
 

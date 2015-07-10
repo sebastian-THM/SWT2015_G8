@@ -14,10 +14,13 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
     bool AddLine(QLine *L);
-
+    static RenderArea *Instance;
 
 signals:
     void DrawingDone();
+    void SendOpenFile(std::string Filename);
+    void SendStart();
+    void SendPause();
 
 public slots:
     void UpdateLine();

@@ -4,6 +4,8 @@
 #include <QObject>
 #include "controller.h"
 
+
+//Basisklasse für alle States
 class State_Base : public QObject
 {
     Q_OBJECT

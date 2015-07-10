@@ -4,6 +4,7 @@
 #include <QObject>
 #include "state_base.h"
 
+//Aus-Zustand
 class State_Off : public State_Base
 {
 public:

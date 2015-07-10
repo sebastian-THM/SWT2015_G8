@@ -21,5 +21,10 @@ void View_QT::on_pushButton_clicked()
 
 void View_QT::on_pushButton_2_clicked()
 {
+    emit ui->renderArea->SendStart();
+}
 
+void View_QT::on_pushButton_3_clicked()
+{
+    emit ui->renderArea->SendOpenFile(ui->lineEdit->text().toStdString());
 }

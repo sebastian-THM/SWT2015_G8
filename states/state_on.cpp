@@ -16,5 +16,6 @@ void State_On::Move(int x, int y)
 void State_On::Off()
 {
     StateController->Current_State = new State_Off(StateController);
+    connect(this,SIGNAL(destroyed(QObject*)),StateController,SLOT(inStateHasChanged()));
     delete this;
 }

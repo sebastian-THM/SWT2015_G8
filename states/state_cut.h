@@ -4,6 +4,7 @@
 #include <QObject>
 #include "state_base.h"
 
+//Schneide-Zustand
 class State_Cut : public State_Base
 {
 public:

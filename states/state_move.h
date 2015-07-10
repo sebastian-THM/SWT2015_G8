@@ -4,6 +4,7 @@
 #include <QObject>
 #include "state_base.h"
 
+//InBewegung-Zustand
 class State_Move : public State_Base
 {
 public:

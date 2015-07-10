@@ -4,6 +4,7 @@
 #include <QObject>
 #include "state_base.h"
 
+//An-Zustand
 class State_On : public State_Base
 {
 public:
