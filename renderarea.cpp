@@ -11,6 +11,11 @@ RenderArea::RenderArea(QWidget *parent): QWidget(parent)
     Drawline = NULL;
     LastPoint.setX(0);
     LastPoint.setY(0);
+    //Klassenvariable Instance setzen
+    //Instance Zeigt auf das zuletzt erzeugte Objekt von RenderArea
+    //Nötig, um in main() auf ein GUI-Objekt zuzugreifen.
+    //ui ist in view_qt private und damit aus main nicht erreichbar.
+    //view_qt kann nicht geändert werden, da automatisch erzeugt, aus den Daten des GUI-Editors.
     Instance = this;
     Laserstate = 0;
 }
@@ -26,10 +31,9 @@ void RenderArea::UpdateLine()
         dist = sqrt((CurrentLine->dx()*CurrentLine->dx())+(CurrentLine->dy()*CurrentLine->dy()));
         perc = distdone/dist;
         //Damit die träge bewegung des Lasers dargestellt werden kann
-        //muss immer eine Linie im 10 Milisekunde Tackt gezeichnet werden
-        //Hier wird im else Zweig der Wert erhöt setz die zu zeichnene
-        //Linie fest
-        //Wenn perc größer als 1 ist dann wird CurrentLine in die
+        //muss immer eine Teillinie im 10 Milisekunde Tackt gezeichnet werden
+        //Hier wird im else Zweig die Teillinie berechnet
+        //Wenn die Linie ganz gezeichnet ist(perc größer als 1), wird CurrentLine in die
         //LineList gespeichert
         if (perc > 1)
         {
@@ -157,6 +161,7 @@ void RenderArea::paintEvent(QPaintEvent *)
 
 //Die nächsten 4 Funktionen sind für das festlegen
 //der Aktuellen zuständig für das paintEvent zuständig
+//und verarbeiten die Anweisungen vom Controller
 void RenderArea::Cut(int x, int y)
 {
     Laserstate = 3;
@@ -195,6 +200,7 @@ bool RenderArea::AddLine(QLine *L)
     return false;
 }
 
+//GUI zurücksetzen
 void RenderArea::Reset()
 {
     //Timer stoppen und alle Felder leeren
@@ -210,6 +216,11 @@ void RenderArea::Reset()
         delete CurrentLine;
         CurrentLine = NULL;
     }
+    if(Drawline)
+    {
+        delete Drawline;
+        Drawline = NULL;
+    }
     LineList.clear();
     LaserPos.setX(0);
     LaserPos.setY(0);
@@ -220,6 +231,7 @@ void RenderArea::Reset()
     repaint();
 }
 
+//Fehlermeldungen vom Controller anzeigen
 void RenderArea::ShowError(std::string Msg)
 {
     QMessageBox::information(this, QString("Fehler"), QString(Msg.c_str()));

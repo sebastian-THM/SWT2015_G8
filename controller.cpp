@@ -4,9 +4,12 @@
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
+    //Statusvariablen
     ReadyForNextOpcode = true;
     IsFileOpened = false;
+    //Startzustand
     Current_State = new State_Off(this);
+    //Timer erzeugen und starten
     Timer = new QTimer(this);
     connect(Timer,SIGNAL(timeout()),this,SLOT(onTimer()));
     Timer->start(100);
@@ -14,6 +17,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::onTimer()
 {
+    //Auswertung der Statusvariablen und bei Bedarf anforderung des nächsten Opcodes.
     if(ReadyForNextOpcode && IsFileOpened && IsActive)
     {
         ReadyForNextOpcode = false;
@@ -22,6 +26,7 @@ void Controller::onTimer()
 }
 
 //Signaleingänge von DispatchTable
+//Der Laser soll bewegt werden ohne zu schneiden.
 void Controller::inMove(std::string Coords)
 {
     std::string a;
@@ -46,6 +51,7 @@ void Controller::inMove(std::string Coords)
     Current_State->Move(x,y);
 }
 
+//Der Laser soll schneiden
 void Controller::inLaser(std::string State)
 {
     //Leerzeichen entfernen
@@ -71,15 +77,19 @@ void Controller::inStateHasChanged()
 
 
 //Signaleingänge von GUI
+//Der Laser hat sein Aktuelles ziel Erreicht.
 void Controller::inMoveDone()
 {
     Current_State->MoveDone();
 }
 
+//Eine Datei soll eingelesen werden
+//oder der User wollte den aktuellen Vorgang abbrechen.
 void Controller::inNewFileName(std::string Filename)
 {
     if( Filename.compare("NOFILE")==0)
     {
+      //Abruch aktuelle Datei ignorieren und die GUI zurücksetzen.
       IsFileOpened = false;
       emit ResetGUI();
     }
@@ -114,12 +124,13 @@ void Controller::inNewFileOpend()
     IsActive = false;
 }
 
-//Dateiname oder Dateiinhalt ist Fehlerhaft
+//Dateiinhalt ist Fehlerhaft
 void Controller::inFileInvalid()
 {
     emit Error("Dateiinhalt ist fehlerhaft");
 }
 
+//Dateiname ist Fehlerhaft
 void Controller::inFileNameInvalid()
 {
     emit Error("Datei kann nicht geöffnet werden.");
