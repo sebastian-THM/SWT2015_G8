@@ -16,12 +16,18 @@ public:
     ~View_QT();
 
 public slots:
-    void on_pushButton_clicked();
+    void on_DataBrowserButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_StartButton_clicked();
 
 private slots:
-    void on_pushButton_3_clicked();
+    void on_DataLoadButton_clicked();
+
+    void on_PauseButton_clicked();
+
+    void on_lineEdit_returnPressed();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::View_QT *ui;

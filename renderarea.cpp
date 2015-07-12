@@ -2,8 +2,10 @@
 
 RenderArea::RenderArea(QWidget *parent): QWidget(parent)
 {
+    //Timer erstellen
     Timer = new QTimer(this);
     connect(Timer, SIGNAL(timeout()),this, SLOT(UpdateLine()));
+    //Timer mit 10 Milisikunden Initialisieren und Starten
     Timer->start(10);
     Drawline = NULL;
     LastPoint.setX(0);
@@ -100,7 +102,8 @@ void RenderArea::Move(int x, int y)
     LastPoint.setY(y);
 }
 
-bool RenderArea::AddLine(QLine *L){
+bool RenderArea::AddLine(QLine *L)
+{
     if(CurrentLine == NULL)
     {
         CurrentLine = L;
@@ -111,6 +114,7 @@ bool RenderArea::AddLine(QLine *L){
 
 void RenderArea::Reset()
 {
+    //Timer stoppen und alle Felder leeren
     Timer->stop();
 
     if(MovePath != NULL)

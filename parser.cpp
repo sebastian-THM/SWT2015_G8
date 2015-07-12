@@ -47,6 +47,7 @@ void Parser::OpenFile(std::string Filename)
         {
             text[X-2] = '\0';
         }
+
         s = std::string(text);
         if(std::regex_match(s,std::regex("^#+.*$|^MOVE [0-9]+, *[0-9]+ *$|^LASER (ON|OFF) *$|^ *$")))
         {
@@ -55,44 +56,46 @@ void Parser::OpenFile(std::string Filename)
             //Filter OpCode
             for(i = 0;s[i] != '\0';i++)
             {
-                //if char is '#' then quit line
+                //Wenn der char '#'ist dann verlasse den string
                 if(s[i] == '#')
                     break;
-                //if char is 'L' die full word is LASER
-                //steps 3 chars further
+                //Wenn der nächste char ein 'L' ist dann muss es das Wort LASER sein
+                //springe 4 chars weiter
                 if(s[i] == 'L')
                 {
                     i = i + 4;
                     OpcodeList.push_back("LASER");
                 }
-                //if char is 'M' die full word is LASER
-                //steps 3 chars further
+                //wenn der nächste char ein 'M' ist dann muss es das Wort MOVE sein
+                //springe 3 chars weiter
                 if(s[i] == 'M')
                 {
                     i = i + 3;
                     OpcodeList.push_back("MOVE");
                 }
-                // if char is 'O' he must deside
-                //if the next char is a 'F' or a 'N'
+                // wenn der nächste char ein 'O' ist dann muss es das Wort MOVE sein
+                //entscheidet ob der nächste Buchstabe ein 'N' oder ein 'F'
                 if(s[i] == 'O')
                 {
-                    //desides if it is a char 'F'
+                    //entscheide sich ob es ein 'F' ist oder nicht
                     if(s[i+1] == 'F')
                     {
                         i = i + 2;
                         OpcodeList.push_back("OFF");
                     }
-                    // else it musst be a char 'N'
+                    // wenn es kein F ist kann es nur 'N' sein (also ON)
                     else
                     {
                         i = i + 1;
                         OpcodeList.push_back("ON");
                     }
                 }
-                //if the char ownes a Numer
+                //schaue nach ob eine Zahl enthalten ist
                 if((s[i] == '0') || (s[i] == '1') || (s[i] == '2') || (s[i] == '3') || (s[i] == '4') || (s[i] == '5') ||
                    (s[i] == '6') || (s[i] == '7') || (s[i] == '8') || (s[i] == '9') || (s[i] == ',') || (s[i] == ' '))
                 {
+                    //wenn temp nicht leer ist und s ist kein ein leerzeichen
+                    //dann speicher es in temp
                     if(!((temp.empty()) && (s[i] == ' ')))
                     {
                         temp.push_back(s[i]);

@@ -78,6 +78,11 @@ void Controller::inMoveDone()
 
 void Controller::inNewFileName(std::string Filename)
 {
+    if( Filename.compare("NOFILE")==0)
+    {
+      IsFileOpened = false;
+      emit ResetGUI();
+    }
     //Dateiname an Model weitergeben
     emit OpenFile(Filename);
 }
