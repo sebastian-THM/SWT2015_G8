@@ -18,7 +18,12 @@ Parser::Parser(QObject *parent) : QObject(parent)
 
 }
 
-
+//Diese Funktion ist zuständig druch den
+//übergebenen Dateipfad eine Datei zu öffnen und
+//deren Inhalt auf ihre Korrektheit zu prüfen.
+//wenn der inhalt syntaktisch korrekt ist
+//werden die einzelnen informationen entnommen und in eine
+//Liste OpcodeList gespeichert
 void Parser::OpenFile(std::string Filename)
 {
 
@@ -99,6 +104,7 @@ void Parser::OpenFile(std::string Filename)
                     //dann speicher es in temp
                     if(!((temp.empty()) && (s[i] == ' ')))
                     {
+                        //Speicher die zahl in temp
                         temp.push_back(s[i]);
                         if((s[i + 1] == '\0') || (s[i + 1] == '#'))
                         {
@@ -112,24 +118,34 @@ void Parser::OpenFile(std::string Filename)
         }
         else
         {
+            //gebe das Signal FileInvalid weiter
             emit FileInvalid();
             return;
         }
 
     }
+    //gebe das Signal FileOpend weiter
     emit FileOpened();
 }
 
+//Diese Funktion ist für die Übermittlung
+//der einzelnen Opcodes zuständig
 void Parser::GetNextOpcode()
 {
+    //variablen definition
     std::string Funktion, Parameter;
 
     if(!OpcodeList.empty())
     {
+        //speicher die Funktion die die Variable Funktion
         Funktion = OpcodeList.first();
+        //lösche das erste Elemten in der List
         OpcodeList.removeFirst();
+        //speicher den Parameter in die Variable Parameter
         Parameter = OpcodeList.first();
+        //lösche das erste Element in der Liste
         OpcodeList.removeFirst();
+        //Sende die 2 Varablen an SendOpcode
         emit SendOpcode(Funktion, Parameter);
     }
 
