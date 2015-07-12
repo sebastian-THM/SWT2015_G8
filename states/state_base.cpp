@@ -6,7 +6,8 @@ State_Base::State_Base(class Controller *pController) : QObject((QObject*)pContr
     StateController = pController;
 }
 
-void State_Base::Move(int x, int y)
+
+void State_Base::Move(int, int)
 {
 }
 

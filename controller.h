@@ -42,6 +42,7 @@ public slots:
     //Signaleingänge vom Parser
     void inNewFileOpend();
     void inFileInvalid();
+    void inFileNameInvalid();
     //Signaleingang von den States
     void inStateHasChanged();
 

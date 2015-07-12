@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "renderarea.h"
 
 RenderArea::RenderArea(QWidget *parent): QWidget(parent)
@@ -11,6 +12,7 @@ RenderArea::RenderArea(QWidget *parent): QWidget(parent)
     LastPoint.setX(0);
     LastPoint.setY(0);
     Instance = this;
+    Laserstate = 0;
 }
 
 void RenderArea::UpdateLine()
@@ -86,9 +88,44 @@ void RenderArea::paintEvent(QPaintEvent *) {
         }
         p.setPen(Qt::green);
         p.drawEllipse(LaserPos, 2 ,2);
+        //Status Display
+        p.setPen(Qt::black);
+        p.setBrush(Qt::white);
+        p.drawRect(0,height()-14,100,13);
+        switch (Laserstate) {
+        case 0:
+            p.setBrush(Qt::darkBlue);
+            break;
+        case 1:
+            p.setBrush(Qt::darkRed);
+            break;
+        case 2:
+            p.setBrush(Qt::blue);
+            break;
+        case 3:
+            p.setBrush(Qt::red);
+            break;
+        }
+        p.drawRect(50,height()-14,50,13);
+        p.drawText(2,height()-3,"State:");
+        switch (Laserstate) {
+        case 0:
+            p.drawText(52,height()-3,"OFF");
+            break;
+        case 1:
+            p.drawText(52,height()-3,"ON");
+            break;
+        case 2:
+            p.drawText(52,height()-3,"MOVE");
+            break;
+        case 3:
+            p.drawText(52,height()-3,"CUT");
+            break;
+        }
     }
 void RenderArea::Cut(int x, int y)
 {
+    Laserstate = 3;
     QLine *pQLine = new QLine(LastPoint.x(),LastPoint.y(),x,y);
     LastPoint.setX(x);
     LastPoint.setY(y);
@@ -97,9 +134,20 @@ void RenderArea::Cut(int x, int y)
 
 void RenderArea::Move(int x, int y)
 {
+    Laserstate = 2;
     MovePath = new QLine(LastPoint.x(),LastPoint.y(),x,y);
     LastPoint.setX(x);
     LastPoint.setY(y);
+}
+
+void RenderArea::On()
+{
+    Laserstate = 1;
+}
+
+void RenderArea::Off()
+{
+    Laserstate = 0;
 }
 
 bool RenderArea::AddLine(QLine *L)
@@ -132,5 +180,12 @@ void RenderArea::Reset()
     LaserPos.setY(0);
     LastPoint.setX(0);
     LastPoint.setY(0);
+    Laserstate = 0;
     Timer->start(10);
+}
+
+void RenderArea::ShowError(std::string Msg)
+{
+    QMessageBox::information(this, QString("Fehler"), QString(Msg.c_str()));
+
 }

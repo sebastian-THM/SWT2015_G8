@@ -23,19 +23,26 @@ void View_QT::on_StartButton_clicked()
 
 void View_QT::on_DataBrowserButton_clicked()
 {
+    QString filename;
+
     ui->plainTextEdit->clear();
-    ui->plainTextEdit->setEnabled(true);
+    filename = QFileDialog::getOpenFileName(this, tr("Datei auswählen"), "C://","All Files(*.*);; Text Files (*.txt)");
+    ui->lineEdit->setText(filename);
+    on_DataLoadButton_clicked();
+}
+
+void View_QT::on_DataLoadButton_clicked()
+{
     char text[201];
     int X;
     QStringList textlist;
+
     QString filename;
 
-    filename = QFileDialog::getOpenFileName(this, tr("Datei auswählen"), "C://","All Files(*.*);; Text Files (*.txt)");
-    QMessageBox::information(this, tr("Datei geladen"), "Zum starten des Lasers jetzt auf \"Star/Weiter\" drücken");
-    ui->lineEdit->setText(filename);
+    filename = ui->lineEdit->text();
     if(filename.isEmpty())
     {
-        QMessageBox::information(this, tr("Fehler"), "Es wurde keine Datei ausgewählt");
+        QMessageBox::information(this, tr("Fehler"), "Es wurde keine Datei angegeben.");
         return;
     }
     else
@@ -58,14 +65,9 @@ void View_QT::on_DataBrowserButton_clicked()
         }
         ui->plainTextEdit->setPlainText(textlist.join('\n') );
     }
-    ui->plainTextEdit->setEnabled(false);
-    emit ui->renderArea->SendOpenFile(ui->lineEdit->text().toStdString());
-}
 
-void View_QT::on_DataLoadButton_clicked()
-{
     QMessageBox::information(this, tr("Datei geladen"), "Zum starten des Lasers jetzt auf \"Star/Weiter\" drücken");
-    emit ui->renderArea->SendOpenFile(ui->lineEdit->text().toStdString());
+    emit ui->renderArea->SendOpenFile(filename.toStdString());
 }
 
 void View_QT::on_PauseButton_clicked()

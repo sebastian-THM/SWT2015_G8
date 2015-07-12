@@ -83,8 +83,11 @@ void Controller::inNewFileName(std::string Filename)
       IsFileOpened = false;
       emit ResetGUI();
     }
-    //Dateiname an Model weitergeben
-    emit OpenFile(Filename);
+    else
+    {
+        //Dateiname an Model weitergeben
+        emit OpenFile(Filename);
+    }
 }
 
 //Aktivieren
@@ -114,5 +117,10 @@ void Controller::inNewFileOpend()
 //Dateiname oder Dateiinhalt ist Fehlerhaft
 void Controller::inFileInvalid()
 {
-    emit Error("Kann Datei nicht öffnen oder Datei ungültig.");
+    emit Error("Dateiinhalt ist fehlerhaft");
+}
+
+void Controller::inFileNameInvalid()
+{
+    emit Error("Datei kann nicht geöffnet werden.");
 }

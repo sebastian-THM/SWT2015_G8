@@ -26,7 +26,10 @@ public slots:
     void UpdateLine();
     void Cut(int x, int y);
     void Move(int x, int y);
+    void On();
+    void Off();
     void Reset();
+    void ShowError(std::string Msg);
 
 private:
     QList<QLine *> LineList;
@@ -37,6 +40,7 @@ private:
     QPoint LaserPos;
     QLine * MovePath = NULL;
     void paintEvent(QPaintEvent *);
+    int Laserstate;
 };
 
 #endif // RENDERAREA_H

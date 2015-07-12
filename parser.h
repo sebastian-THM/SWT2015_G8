@@ -14,6 +14,8 @@ public:
 signals:
     void FileOpened();
     void SendOpcode(std::string FunctionName, std::string Parameter);
+    void FileInvalid();
+    void FileNameInvalid();
 public slots:
     void GetNextOpcode();
     void OpenFile(std::string Filename);

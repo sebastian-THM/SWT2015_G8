@@ -12,7 +12,7 @@ class State_Base : public QObject
 public:
     State_Base(class Controller *pController);
     class Controller *StateController;
-    virtual void Move(int x, int y);
+    virtual void Move(int, int);
     virtual void On();
     virtual void Off();
     virtual void MoveDone();

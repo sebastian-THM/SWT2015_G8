@@ -29,13 +29,14 @@ void Parser::OpenFile(std::string Filename)
     char text [201];
 
 
-
-
     QFile File(Filename.c_str());
     if(!File.open(QIODevice::ReadOnly))
     {
+        emit FileNameInvalid();
         return;
     }
+
+    OpcodeList.clear();
 
     while((X=File.readLine(text,200)) != -1)
     {
@@ -111,6 +112,7 @@ void Parser::OpenFile(std::string Filename)
         }
         else
         {
+            emit FileInvalid();
             return;
         }
 
